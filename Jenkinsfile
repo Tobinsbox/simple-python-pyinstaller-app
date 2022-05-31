@@ -17,6 +17,7 @@ pipeline {
             }
             steps{
                 sh 'py.test --verbose --junit-xml test-reports/results.xml sources/test_calc.py'
+               
             }
             post{
                 always{
@@ -25,7 +26,13 @@ pipeline {
             }
             
         }
-         stage('Deliver') {
+        
+        stage('Ready To Delivery'){
+            steps{
+             input "Are you sure to delivery?"
+            }
+        }
+        stage('Deliver') {
             agent {
                 docker {
                     image 'cdrx/pyinstaller-linux:python2'
